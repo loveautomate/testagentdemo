@@ -1,5 +1,7 @@
 # TestAgentDemo – Agentic QA Workflow Demo (Cursor + Playwright)
 
+[![Playwright Tests](https://github.com/loveautomate/testagentdemo/actions/workflows/playwright.yml/badge.svg?branch=main)](https://github.com/loveautomate/testagentdemo/actions/workflows/playwright.yml)
+
 This repository demonstrates **Agentic QA Workflow** using:
 
 - Playwright Test  
