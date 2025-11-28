@@ -31,11 +31,7 @@ coverage/
 .env.production.local
 
 # IDE and editor files
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/*
 !.vscode/mcp.json
 .idea/
 *.swp

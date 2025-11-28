@@ -29,7 +29,7 @@ Files:
 - `.github/chatmodes/planner.chatmode.md`
 - `.github/chatmodes/generator.chatmode.md`
 - `.github/chatmodes/healer.chatmode.md`
-- `.vscode/mcp.json`
+- `.vscode/mcp.json` *(adjusted for Cursor)*
 
 Cursor orchestrator rule uses these as authoritative definitions.
 
@@ -57,4 +57,79 @@ The TestAgentDemo orchestrator will then:
 ```bash
 npm install
 npx playwright test
+```
+
+---
+
+## Configuring MCP in Cursor IDE
+
+Cursor supports MCP (Model Context Protocol) servers at two levels:
+
+### Project-Level Configuration
+
+Place `.vscode/mcp.json` in your project (already included in this repo):
+
+```json
+{
+  "mcpServers": {
+    "playwright-test": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+> **Important:** The server name must be `playwright-test` to match the tool prefixes in chatmode files (e.g., `playwright-test/browser_click`).
+
+### User-Level (Global) Configuration
+
+For MCP servers available across all projects, edit your global Cursor config:
+
+| OS | Path |
+|----|------|
+| **Windows** | `C:\Users\<username>\.cursor\mcp.json` |
+| **macOS** | `~/.cursor/mcp.json` |
+| **Linux** | `~/.cursor/mcp.json` |
+
+Example global `mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "playwright-test": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "my-remote-server": {
+      "url": "https://example.com/mcp",
+      "headers": {}
+    }
+  }
+}
+```
+
+### MCP Server Types
+
+| Type | Config | Example |
+|------|--------|---------|
+| **stdio** (local) | `command` + `args` | `playwright-test` |
+| **HTTP/SSE** (remote) | `url` + optional `headers` | Remote MCP servers |
+
+### Verifying MCP Status in Cursor
+
+1. Open **Settings** (Ctrl+,)
+2. Navigate to **MCP** section
+3. Check server status indicators:
+   - 🟢 Green = Connected
+   - 🔴 Red = Error (check Output → MCP logs)
+
+### Troubleshooting
+
+```powershell
+# Clear npx cache if MCP server fails to start
+Remove-Item -Recurse -Force "$env:LOCALAPPDATA\npm-cache\_npx"
+
+# Restart Cursor to reload MCP configuration
+```
 
